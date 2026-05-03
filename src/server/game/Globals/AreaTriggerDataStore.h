@@ -23,6 +23,13 @@
 class AreaTriggerTemplate;
 class AreaTriggerMiscTemplate;
 
+#include "Define.h"
+#include "ObjectGuid.h"
+#include "Position.h"
+
+#include <list>
+#include <unordered_map>
+
 struct AreaTriggerData
 {
     uint32 id;

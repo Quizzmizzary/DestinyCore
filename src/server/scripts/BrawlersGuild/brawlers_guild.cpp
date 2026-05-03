@@ -14,7 +14,11 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+#include "Player.h"
+#include "MotionMaster.h"
+#include "SpellScript.h"
+#include "SpellScript.h"
+#include "Unit.h"
 #include "AchievementMgr.h"
 #include "BrawlersGuild.h"
 #include "ScriptedGossip.h"

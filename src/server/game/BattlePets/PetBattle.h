@@ -17,6 +17,12 @@
 
 #pragma once
 
+#include "DatabaseEnvFwd.h"
+#include "ObjectGuid.h"
+#include "Player.h"
+#include "Creature.h"
+#include "Position.h"
+#include "Timer.h"
 #include "Common.h"
 #include "UnitDefines.h"
 

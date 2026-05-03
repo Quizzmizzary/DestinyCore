@@ -18,6 +18,7 @@
 #ifndef CollectionPackets_h__
 #define CollectionPackets_h__
 
+#include "ObjectGuid.h"
 #include "Packet.h"
 
 namespace WorldPackets

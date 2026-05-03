@@ -15,6 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ObjectMgr.h"
+#include "World.h"
 #include "DB2Structure.h"
 #include "BotAITool.h"
 #include "Pet.h"

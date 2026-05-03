@@ -19,6 +19,9 @@
 #ifndef _WILDBATTLEPET_HEADER_
 #define _WILDBATTLEPET_HEADER_
 
+#include <set>
+#include <map>
+#include "ObjectGuid.h"
 #include "Common.h"
 #include "Timer.h"
 #include "PetBattle.h"

@@ -16,7 +16,8 @@
  */
 
 #include "WildBattlePet.h"
- #include <random>
+
+#include "ObjectAccessor.h"
 #include "DatabaseEnv.h"
 #include "Creature.h"
 #include "PetBattle.h"
@@ -27,7 +28,9 @@
 #include "DB2Stores.h"
 #include "Common.h"
 #include "BattlePetDataStore.h"
-#include <Movement/MotionMaster.h>
+#include "MotionMaster.h"
+
+#include <random>
 
 void WildBattlePetZonePools::LoadPoolTemplate(Field* fields)
 {

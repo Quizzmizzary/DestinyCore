@@ -19,6 +19,11 @@
 #ifndef TRINITYCORE_CHAT_H
 #define TRINITYCORE_CHAT_H
 
+#include "Errors.h"
+#include <boost/any.hpp>
+#include <vector>
+#include <boost/any.hpp>
+#include <vector>
 #include "ObjectGuid.h"
 #include "SharedDefines.h"
 #include "StringFormat.h"

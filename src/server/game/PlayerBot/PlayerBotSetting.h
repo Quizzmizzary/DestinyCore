@@ -18,6 +18,7 @@
 #ifndef __PLAYERBOTSETTING_H__
 #define __PLAYERBOTSETTING_H__
 
+#include "Item.h"
 #include "Log.h"
 #include "Common.h"
 #include "SharedDefines.h"

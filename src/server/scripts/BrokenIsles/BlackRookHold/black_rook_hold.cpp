@@ -15,6 +15,10 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ScriptedCreature.h"
+#include "CreatureAIImpl.h"
+#include "Creature.h"
+#include "Unit.h"
 #include "AreaTrigger.h"
 #include "AreaTriggerAI.h"
 #include "ScriptMgr.h"

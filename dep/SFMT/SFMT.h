@@ -44,14 +44,16 @@ extern "C" {
 #if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
   #include <inttypes.h>
 #elif defined(_MSC_VER) || defined(__BORLANDC__)
-  typedef unsigned int uint32_t;
-  typedef unsigned __int64 uint64_t;
-  #define inline __inline
+    typedef unsigned int uint32_t;
+    typedef unsigned __int64 uint64_t;
+    #ifndef __cplusplus
+        #define inline __inline
+    #endif
 #else
-  #include <inttypes.h>
-  #if defined(__GNUC__)
-    #define inline __inline__
-  #endif
+    #include <inttypes.h>
+    #if defined(__GNUC__) && !defined(__cplusplus)
+        #define inline __inline__
+    #endif
 #endif
 
 #ifndef PRIu64

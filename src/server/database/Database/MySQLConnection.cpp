@@ -15,6 +15,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "IoContext.h"
 #include "MySQLConnection.h"
 #include "Common.h"
 #include "IoContext.h"

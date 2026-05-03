@@ -15,6 +15,10 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "WorldSession.h"
+#include "ObjectMgr.h"
+#include "Player.h"
+#include "Item.h"
 #include "BattlePetPackets.h"
 #include "WildBattlePet.h"
 #include "GridNotifiers.h"
@@ -23,7 +27,6 @@
 #include "Object.h"
 #include "PathGenerator.h"
 #include "ObjectAccessor.h"
-#include "Item.h"
 
 void WorldSession::HandleBattlePetSummon(WorldPackets::BattlePet::BattlePetGuidRead& packet)
 {
@@ -51,23 +54,29 @@ void WorldSession::HandleBattlePetNameQuery(WorldPackets::BattlePet::Query& pack
     bool haveDeclinedNames = false;
 
     for (auto const& name : battlePet->DeclinedNames)
+    {
         if (!name.empty())
         {
             haveDeclinedNames = true;
             break;
         }
+    }
 
     WorldPackets::BattlePet::QueryResponse response;
     response.BattlePetID = packet.BattlePetID;
     response.CreatureID = creature->GetEntry();
     response.Timestamp = creature->GetUInt32Value(UNIT_FIELD_BATTLE_PET_COMPANION_NAME_TIMESTAMP);
+
     if (creature->GetUInt32Value(UNIT_FIELD_BATTLE_PET_COMPANION_NAME_TIMESTAMP) != 0)
     {
         response.Allow = true;
         response.Name = creature->GetName();
+
         if (haveDeclinedNames)
         {
             response.HasDeclined = true;
+            response.DeclinedNames.resize(MAX_DECLINED_NAME_CASES);
+
             for (uint32 i = 0; i < MAX_DECLINED_NAME_CASES; ++i)
                 response.DeclinedNames[i] = battlePet->DeclinedNames[i];
         }
@@ -78,10 +87,15 @@ void WorldSession::HandleBattlePetNameQuery(WorldPackets::BattlePet::Query& pack
 
 void WorldSession::HandleModifyName(WorldPackets::BattlePet::ModifyName& packet)
 {
+    DeclinedName declinedNames = {};
+
+    for (uint8 i = 0; i < MAX_DECLINED_NAME_CASES && i < packet.DeclinedNames.size(); ++i)
+        declinedNames.name[i] = packet.DeclinedNames[i];
+
     auto nameInvalidReason = sObjectMgr->CheckPetName(packet.Name);
     if (nameInvalidReason != PET_NAME_SUCCESS)
     {
-        SendPetNameInvalid(nameInvalidReason, packet.Name, &packet.DeclinedNames);
+        SendPetNameInvalid(nameInvalidReason, packet.Name, &declinedNames);
         return;
     }
 
@@ -91,8 +105,10 @@ void WorldSession::HandleModifyName(WorldPackets::BattlePet::ModifyName& packet)
     {
         battlePet->Name = packet.Name;
         battlePet->NameTimeStamp = timeStamp;
+
         for (uint8 i = 0; i < MAX_DECLINED_NAME_CASES; ++i)
-            battlePet->DeclinedNames[i] = packet.DeclinedNames.name[i];
+            battlePet->DeclinedNames[i] = declinedNames.name[i];
+
         battlePet->needSave = true;
     }
 

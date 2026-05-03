@@ -19,6 +19,7 @@
 #ifndef SCRIPTEDCREATURE_H_
 #define SCRIPTEDCREATURE_H_
 
+#include "Map.h"
 #include "CreatureAI.h"
 #include "Creature.h" // convenience include for scripts, all uses of ScriptedCreature also need Creature (except ScriptedCreature itself doesn't need Creature)
 #include "DamageEventMap.h"

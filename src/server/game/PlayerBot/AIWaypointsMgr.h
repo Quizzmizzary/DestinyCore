@@ -18,6 +18,7 @@
 #ifndef __AIWAYPOINTSMGR_H__
 #define __AIWAYPOINTSMGR_H__
 
+#include "Position.h"
 #include "Log.h"
 #include "Common.h"
 #include "SharedDefines.h"

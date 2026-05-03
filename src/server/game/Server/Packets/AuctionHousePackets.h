@@ -18,6 +18,7 @@
 #ifndef AuctionHousePackets_h__
 #define AuctionHousePackets_h__
 
+#include "PacketUtilities.h"
 #include "Packet.h"
 #include "DBCEnums.h"
 #include "ItemPacketsCommon.h"

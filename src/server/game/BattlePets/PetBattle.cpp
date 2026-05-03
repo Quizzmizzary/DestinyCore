@@ -15,6 +15,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "WorldSession.h"
 #include "PetBattle.h"
 #include "PetBattleAbilityEffect.h"
 #include "WildBattlePet.h"

@@ -15,6 +15,10 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "WorldSession.h"
+#include "ObjectAccessor.h"
+#include "Player.h"
+#include "Creature.h"
 #include "PetBattleSystem.h"
 #include "PetBattle.h"
 #include "Containers.h"

@@ -15,6 +15,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "World.h"
 #include "BattlePetPackets.h"
 #include "Realm.h"
 #include "WowTime.hpp"
@@ -91,6 +92,7 @@ WorldPacket const* WorldPackets::BattlePet::QueryResponse::Write()
     _worldPacket << BattlePetID;
     _worldPacket << CreatureID;
     _worldPacket << MS::Utilities::WowTime::Encode(Timestamp);
+
     if (!_worldPacket.WriteBit(Allow))
         return &_worldPacket;
 
@@ -98,11 +100,17 @@ WorldPacket const* WorldPackets::BattlePet::QueryResponse::Write()
     _worldPacket.WriteBit(HasDeclined);
     _worldPacket.FlushBits();
 
-    for (auto const& v : DeclinedNames)
-        _worldPacket.WriteBits(v.size(), 7);
+    if (HasDeclined)
+    {
+        if (DeclinedNames.size() < MAX_DECLINED_NAME_CASES)
+            DeclinedNames.resize(MAX_DECLINED_NAME_CASES);
 
-    for (auto const& v : DeclinedNames)
-        _worldPacket.WriteString(v);
+        for (uint8 i = 0; i < MAX_DECLINED_NAME_CASES; ++i)
+            _worldPacket.WriteBits(DeclinedNames[i].size(), 7);
+
+        for (uint8 i = 0; i < MAX_DECLINED_NAME_CASES; ++i)
+            _worldPacket.WriteString(DeclinedNames[i]);
+    }
 
     _worldPacket.WriteString(Name);
 
@@ -124,15 +132,20 @@ WorldPacket const* WorldPackets::BattlePet::BattlePetDeleted::Write()
 void WorldPackets::BattlePet::ModifyName::Read()
 {
     _worldPacket >> BattlePetGUID;
+
     auto const nameLen = _worldPacket.ReadBits(7);
+
     if (_worldPacket.ReadBit())
     {
-        int32 count[MAX_DECLINED_NAME_CASES] = {};
-        for (int& var : count)
-            var = _worldPacket.ReadBits(7);
+        uint32 count[MAX_DECLINED_NAME_CASES] = {};
 
-        for (int32 i = 0; i < MAX_DECLINED_NAME_CASES; i++)
-            DeclinedNames.name[i] = _worldPacket.ReadString(count[i]);
+        for (uint8 i = 0; i < MAX_DECLINED_NAME_CASES; ++i)
+            count[i] = _worldPacket.ReadBits(7);
+
+        DeclinedNames.resize(MAX_DECLINED_NAME_CASES);
+
+        for (uint8 i = 0; i < MAX_DECLINED_NAME_CASES; ++i)
+            DeclinedNames[i] = _worldPacket.ReadString(count[i]);
     }
 
     Name = _worldPacket.ReadString(nameLen);
@@ -172,35 +185,35 @@ ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::PetBattleEffec
 
     switch (effectTarget.Type)
     {
-    case PET_BATTLE_EFFECT_TARGET_EX_NPC_EMOTE:
-        data << int32(effectTarget.Params.BroadcastTextID);
-        break;
-    case PET_BATTLE_EFFECT_TARGET_EX_AURA:
-        data << int32(effectTarget.Params.Aura.AuraInstanceID);
-        data << int32(effectTarget.Params.Aura.AuraAbilityID);
-        data << int32(effectTarget.Params.Aura.RoundsRemaining);
-        data << int32(effectTarget.Params.Aura.CurrentRound);
-        break;
-    case PET_BATTLE_EFFECT_TARGET_EX_STAT_CHANGE:
-        data << int32(effectTarget.Params.NewStatValue);
-        break;
-    case PET_BATTLE_EFFECT_TARGET_EX_PET:
-        data << int32(effectTarget.Params.Health);
-        break;
-    case PET_BATTLE_EFFECT_TARGET_EX_ABILITY_CHANGE:
-        data << int32(effectTarget.Params.AbilityChange.ChangedAbilityID);
-        data << int32(effectTarget.Params.AbilityChange.CooldownRemaining);
-        data << int32(effectTarget.Params.AbilityChange.LockdownRemaining);
-        break;
-    case PET_BATTLE_EFFECT_TARGET_EX_TRIGGER_ABILITY:
-        data << int32(effectTarget.Params.TriggerAbilityID);
-        break;
-    case PET_BATTLE_EFFECT_TARGET_EX_STATE:
-        data << int32(effectTarget.Params.State.StateID);
-        data << int32(effectTarget.Params.State.StateValue);
-        break;
-    default:
-        break;
+        case PET_BATTLE_EFFECT_TARGET_EX_NPC_EMOTE:
+            data << int32(effectTarget.Params.BroadcastTextID);
+            break;
+        case PET_BATTLE_EFFECT_TARGET_EX_AURA:
+            data << int32(effectTarget.Params.Aura.AuraInstanceID);
+            data << int32(effectTarget.Params.Aura.AuraAbilityID);
+            data << int32(effectTarget.Params.Aura.RoundsRemaining);
+            data << int32(effectTarget.Params.Aura.CurrentRound);
+            break;
+        case PET_BATTLE_EFFECT_TARGET_EX_STAT_CHANGE:
+            data << int32(effectTarget.Params.NewStatValue);
+            break;
+        case PET_BATTLE_EFFECT_TARGET_EX_PET:
+            data << int32(effectTarget.Params.Health);
+            break;
+        case PET_BATTLE_EFFECT_TARGET_EX_ABILITY_CHANGE:
+            data << int32(effectTarget.Params.AbilityChange.ChangedAbilityID);
+            data << int32(effectTarget.Params.AbilityChange.CooldownRemaining);
+            data << int32(effectTarget.Params.AbilityChange.LockdownRemaining);
+            break;
+        case PET_BATTLE_EFFECT_TARGET_EX_TRIGGER_ABILITY:
+            data << int32(effectTarget.Params.TriggerAbilityID);
+            break;
+        case PET_BATTLE_EFFECT_TARGET_EX_STATE:
+            data << int32(effectTarget.Params.State.StateID);
+            data << int32(effectTarget.Params.State.StateValue);
+            break;
+        default:
+            break;
     }
 
     return data;
@@ -216,6 +229,7 @@ ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::Effect const& 
     data << effect.CasterPBOID;
     data << effect.StackDepth;
     data << static_cast<uint32>(effect.EffectTargetData.size());
+
     for (auto const& map : effect.EffectTargetData)
         data << map;
 
@@ -236,6 +250,7 @@ ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::RoundResult co
     }
 
     data << static_cast<uint32>(roundResult.Ability.size());
+
     for (auto const& map : roundResult.Ability)
         data << map;
 
@@ -275,6 +290,7 @@ ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::FinalRound con
     data.FlushBits();
     data.WriteBit(finalRound.Abandoned);
     data.WriteBit(finalRound.PvpBattle);
+
     for (auto winner : finalRound.Winner)
         data.WriteBit(winner);
 
@@ -282,6 +298,7 @@ ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::FinalRound con
         data << npcCreatureID;
 
     data << static_cast<uint32>(finalRound.Pets.size());
+
     for (auto const& map : finalRound.Pets)
         data << map;
 
@@ -306,6 +323,7 @@ ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::PetBattleLocat
 {
     data << locations.LocationResult;
     data << locations.BattleOrigin;
+
     for (auto const& playerPosition : locations.PlayerPositions)
         data << playerPosition;
 
@@ -316,6 +334,7 @@ ByteBuffer& operator>>(ByteBuffer& data, WorldPackets::BattlePet::PetBattleLocat
 {
     data >> locations.LocationResult;
     data >> locations.BattleOrigin;
+
     for (auto& playerPosition : locations.PlayerPositions)
         data >> playerPosition;
 
@@ -359,6 +378,7 @@ WorldPacket const* WorldPackets::BattlePet::RequestFailed::Write()
 WorldPacket const* WorldPackets::BattlePet::SlotUpdates::Write()
 {
     _worldPacket << static_cast<uint32>(Slots.size());
+
     for (auto const& map : Slots)
         _worldPacket << map;
 
@@ -379,6 +399,7 @@ WorldPacket const* WorldPackets::BattlePet::PetBattleQueueStatus::Write()
     _worldPacket << Msg.Status;
     _worldPacket << static_cast<uint32>(Msg.SlotResult.size());
     _worldPacket << Msg.Ticket;
+
     for (auto const& map : Msg.SlotResult)
         _worldPacket << map;
 
@@ -509,6 +530,7 @@ ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::PetBattleEnvir
 {
     data << static_cast<uint32>(update.Auras.size());
     data << static_cast<uint32>(update.States.size());
+
     for (auto const& x : update.Auras)
         data << x;
 

@@ -18,6 +18,8 @@
 #ifndef __PLAYERBOT_TALKMGR_H__
 #define __PLAYERBOT_TALKMGR_H__
 
+#include "Random.h"
+#include "Util.h"
 #include "Log.h"
 #include "Common.h"
 #include "SharedDefines.h"

@@ -15,6 +15,13 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "CreatureAIImpl.h"
+#include "Unit.h"
+#include "QuestDef.h"
+#include "PetDefines.h"
+#include "MotionMaster.h"
+#include "TemporarySummon.h"
+#include "ObjectAccessor.h"
 #include "ScriptMgr.h"
 #include "ScriptedCreature.h"
 #include "Player.h"

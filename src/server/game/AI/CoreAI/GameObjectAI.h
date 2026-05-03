@@ -19,6 +19,7 @@
 #ifndef TRINITY_GAMEOBJECTAI_H
 #define TRINITY_GAMEOBJECTAI_H
 
+#include "ObjectGuid.h"
 #include "Define.h"
 #include "QuestDef.h"
 #include <list>

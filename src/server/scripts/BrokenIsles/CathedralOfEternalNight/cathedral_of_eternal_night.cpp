@@ -16,6 +16,12 @@
  */
 
 #include "cathedral_of_eternal_night.h"
+#include "Player.h"
+#include "Unit.h"
+#include "MotionMaster.h"
+#include "SpellScript.h"
+#include "TemporarySummon.h"
+#include "Creature.h"
 
 enum Paths
 {

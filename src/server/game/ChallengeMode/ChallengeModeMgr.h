@@ -18,6 +18,16 @@
 #ifndef CHALLENGEMODEMGR_H
 #define CHALLENGEMODEMGR_H
 
+#include "Define.h"
+#include "ObjectGuid.h"
+#include "Player.h"
+
+#include <array>
+#include <list>
+#include <set>
+#include <unordered_map>
+#include <vector>
+
 struct MapChallengeModeEntry;
 
 struct ChallengeMember

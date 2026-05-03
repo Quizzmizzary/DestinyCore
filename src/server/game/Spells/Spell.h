@@ -18,6 +18,7 @@
 #ifndef SPELL_H
 #define SPELL_H
 
+#include "Common.h"
 #include "ConditionMgr.h"
 #include "DBCEnums.h"
 #include "ObjectGuid.h"

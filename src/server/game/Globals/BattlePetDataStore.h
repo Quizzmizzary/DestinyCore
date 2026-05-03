@@ -18,6 +18,12 @@
 #ifndef _BATTLE_PET_DATA_STORE_H
 #define _BATTLE_PET_DATA_STORE_H
 
+#include "Define.h"
+
+#include <map>
+#include <set>
+#include <vector>
+
 struct TC_GAME_API BattlePetTemplate
 {
     uint32 CreatureID;

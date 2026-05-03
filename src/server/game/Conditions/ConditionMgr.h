@@ -18,6 +18,8 @@
 #ifndef CONDITIONMGR_H
 #define CONDITIONMGR_H
 
+#include <string>
+#include "DBCEnums.h"
 #include "Define.h"
 #include "Hash.h"
 #include <array>

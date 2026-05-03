@@ -18,8 +18,24 @@
 #ifndef BattlePetPacketsWorld_h__
 #define BattlePetPacketsWorld_h__
 
+#include "PacketUtilities.h"
+#include "SharedDefines.h"
+#include "Position.h"
+#include "Optional.h"
 #include "Packet.h"
 #include "LFGPacketsCommon.h"
+#include "ObjectGuid.h"
+
+#include <ctime>
+#include <list>
+#include <string>
+#include <unordered_map>
+#include <utility>
+#include <vector>
+
+#ifndef MAX_DECLINED_NAME_CASES
+#define MAX_DECLINED_NAME_CASES 5
+#endif
 
 static uint16 const BATTLE_PET_MAX_JOURNAL_PETS = 1000;
 static uint8 const PARTICIPANTS_COUNT = 2;
@@ -133,7 +149,7 @@ namespace WorldPackets
             time_t Timestamp = time(nullptr);
             bool Allow = false;
             std::string Name;
-            std::array<std::string, MAX_DECLINED_NAME_CASES> DeclinedNames;
+            std::vector<std::string> DeclinedNames;
             bool HasDeclined = false;
         };
 
@@ -172,7 +188,7 @@ namespace WorldPackets
 
             ObjectGuid BattlePetGUID;
             ObjectGuid UnitGUID;
-            DeclinedName DeclinedNames;
+            std::vector<std::string> DeclinedNames;
             std::string Name;
         };
 
@@ -488,11 +504,11 @@ namespace WorldPackets
         {
             BattlePetJournalInfo JournalInfo;
             uint32 NpcTeamMemberID = 0;
-            uint16 StatusFlags = 0; // same as Pet.Flags?
+            uint16 StatusFlags = 0;
             uint8 Slot = 0;
             std::vector<BattlePetAbility> Abilities;
             std::vector<BattlePetAura> Auras;
-            std::unordered_map<uint32 /*StateID*/, int32 /*StateValue*/> States;
+            std::unordered_map<uint32, int32> States;
         };
 
         struct PetBattlePlayerUpdate
@@ -509,7 +525,7 @@ namespace WorldPackets
         struct PetBattleEnviroUpdate
         {
             std::vector<BattlePetAura> Auras;
-            std::unordered_map<uint32 /*StateID*/, int32 /*StateValue*/> States;
+            std::unordered_map<uint32, int32> States;
         };
 
         struct PetBattleFullUpdate
@@ -607,6 +623,7 @@ ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::FinalRound con
 ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::PetBattleLocation& locations);
 ByteBuffer& operator>>(ByteBuffer& data, WorldPackets::BattlePet::PetBattleLocation& locations);
 ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::PetBattlePlayerUpdate const& update);
+ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::PetBattlePetUpdate const& update);
 ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::PetBattleEnviroUpdate const& update);
 ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::PetBattleFullUpdate const& update);
 ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePet::BattlePetAbility const& ability);

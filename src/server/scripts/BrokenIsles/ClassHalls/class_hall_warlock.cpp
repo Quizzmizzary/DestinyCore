@@ -17,6 +17,15 @@
  */
 
 #include "ScriptMgr.h"
+#include "ScriptedCreature.h"
+#include "CreatureAIImpl.h"
+#include "Player.h"
+#include "Unit.h"
+#include "QuestDef.h"
+#include "PetDefines.h"
+#include "MotionMaster.h"
+#include "TemporarySummon.h"
+#include "ObjectAccessor.h"
 
 enum WarlockClassHall
 {

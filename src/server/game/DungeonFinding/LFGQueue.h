@@ -18,6 +18,7 @@
 #ifndef _LFGQUEUE_H
 #define _LFGQUEUE_H
 
+#include "DB2Structure.h"
 #include "LFG.h"
 #include <list>
 

@@ -19,6 +19,9 @@
 #ifndef __TRINITY_ACHIEVEMENTMGR_H
 #define __TRINITY_ACHIEVEMENTMGR_H
 
+#include <chrono>
+#include <unordered_map>
+#include <vector>
 #include "CriteriaHandler.h"
 
 class Guild;

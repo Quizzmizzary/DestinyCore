@@ -18,6 +18,7 @@
 #ifndef EVENTPROCESSOR_H
 #define EVENTPROCESSOR_H
 
+#include <mutex>
 #include "Define.h"
 #include <map>
 #include <functional>

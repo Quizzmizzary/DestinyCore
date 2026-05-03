@@ -18,6 +18,8 @@
 #ifndef _DAMAGE_EVENT_MAP_H_
 #define _DAMAGE_EVENT_MAP_H_
 
+#include "Unit.h"
+#include "Position.h"
 #include "Define.h"
 #include <map>
 

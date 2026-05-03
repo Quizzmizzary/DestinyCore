@@ -18,6 +18,10 @@
 #ifndef _LFGMGR_H
 #define _LFGMGR_H
 
+#include "SharedDefines.h"
+#include "Optional.h"
+
+#include <array>
 #include "Common.h"
 #include "DatabaseEnvFwd.h"
 #include "LFG.h"

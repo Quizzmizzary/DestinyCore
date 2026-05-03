@@ -18,6 +18,7 @@
 #ifndef OBJECTGUID_H
 #define OBJECTGUID_H
 
+#include <ostream>
 #include "Define.h"
 #include <deque>
 #include <functional>

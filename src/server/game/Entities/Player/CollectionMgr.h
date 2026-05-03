@@ -18,6 +18,7 @@
 #ifndef CollectionMgr_h__
 #define CollectionMgr_h__
 
+#include "Player.h"
 #include "Define.h"
 #include "DatabaseEnvFwd.h"
 #include "ObjectGuid.h"

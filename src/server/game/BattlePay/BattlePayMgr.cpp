@@ -15,6 +15,9 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "World.h"
+#include "WorldSession.h"
+
 #include "Common.h"
 #include "ObjectMgr.h"
 #include "BattlePayMgr.h"

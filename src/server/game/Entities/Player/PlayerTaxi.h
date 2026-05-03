@@ -18,6 +18,7 @@
 #ifndef __PLAYERTAXI_H__
 #define __PLAYERTAXI_H__
 
+#include <string>
 #include "DBCEnums.h"
 #include "Define.h"
 #include <deque>

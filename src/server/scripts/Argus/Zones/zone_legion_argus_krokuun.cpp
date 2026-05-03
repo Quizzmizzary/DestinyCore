@@ -15,6 +15,9 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "SpellScript.h"
+#include "ObjectAccessor.h"
+#include "Unit.h"
 #include "ScriptMgr.h"
 #include "Player.h"
 #include "SpellMgr.h"

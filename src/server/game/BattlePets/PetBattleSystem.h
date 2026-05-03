@@ -19,6 +19,16 @@
 #ifndef _PetBattleSystem
 #define _PetBattleSystem
 
+#include <map>
+#include <queue>
+#include <mutex>
+
+#include "Define.h"
+#include "ObjectGuid.h"
+#include "Player.h"
+#include "Position.h"
+#include "Timer.h"
+#include "PetBattle.h"
 #include "Common.h"
 
 enum eBattlePetRequests

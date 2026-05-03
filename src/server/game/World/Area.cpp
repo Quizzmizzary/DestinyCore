@@ -15,6 +15,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "DB2Stores.h"
 #include "Area.h"
 #include "GameObject.h"
 #include "ObjectMgr.h"

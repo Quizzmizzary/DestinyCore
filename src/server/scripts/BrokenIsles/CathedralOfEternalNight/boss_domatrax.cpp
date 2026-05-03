@@ -15,6 +15,15 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "InstanceScript.h"
+#include "SpellScript.h"
+#include "SpellInfo.h"
+#include "ObjectAccessor.h"
+#include "MotionMaster.h"
+#include "TemporarySummon.h"
+#include "Creature.h"
+#include "Player.h"
+#include "Unit.h"
 #include "cathedral_of_eternal_night.h"
 #include "AreaTrigger.h"
 #include "AreaTriggerAI.h"

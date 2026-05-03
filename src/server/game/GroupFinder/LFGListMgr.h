@@ -16,8 +16,12 @@
  */
 
 #pragma once
-
+#include "ObjectGuid.h"
+#include "WorldSession.h"
+#include "LfgListPackets.h"
 #include "LFGList.h"
+#include <map>
+
 
 class LFGListMgr
 {

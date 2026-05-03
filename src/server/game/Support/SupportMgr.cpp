@@ -25,6 +25,7 @@
 #include "Player.h"
 #include "Timer.h"
 #include "World.h"
+#include "WorldSession.h"
 #include <sstream>
 
 inline time_t GetAge(uint64 t) { return (time(nullptr) - t) / DAY; }

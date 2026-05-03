@@ -15,6 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ObjectMgr.h"
+#include "World.h"
 #include "ChallengeModeMgr.h"
 #include "Containers.h"
 #include "DB2Stores.h"

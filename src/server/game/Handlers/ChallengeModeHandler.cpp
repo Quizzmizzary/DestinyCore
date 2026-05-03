@@ -15,6 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "World.h"
+#include "Map.h"
 #include "ChallengeModePackets.h"
 #include "InstanceScript.h"
 #include "Item.h"

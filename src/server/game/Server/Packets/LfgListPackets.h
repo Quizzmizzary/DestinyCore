@@ -18,6 +18,7 @@
 #ifndef LfgListPackets_h__
 #define LfgListPackets_h__
 
+#include "PacketUtilities.h"
 #include "LFGPacketsCommon.h"
 #include "Optional.h"
 #include "Packet.h"

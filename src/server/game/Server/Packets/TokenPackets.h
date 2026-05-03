@@ -18,6 +18,7 @@
 #ifndef TokenPackets_h__
 #define TokenPackets_h__
 
+#include "ObjectGuid.h"
 #include "Packet.h"
 
 namespace WorldPackets

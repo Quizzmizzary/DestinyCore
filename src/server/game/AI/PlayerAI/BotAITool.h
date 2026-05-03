@@ -19,6 +19,11 @@
 #ifndef _BOT_AI_TOOL_H
 #define _BOT_AI_TOOL_H
 
+#include "Map.h"
+#include "WorldSession.h"
+#include "ObjectMgr.h"
+#include "World.h"
+#include "ObjectAccessor.h"
 #include "ScriptSystem.h"
 #include "PlayerAI.h"
 #include "Player.h"

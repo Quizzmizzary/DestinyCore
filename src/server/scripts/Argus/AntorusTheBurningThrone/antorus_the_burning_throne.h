@@ -18,6 +18,18 @@
 #ifndef ANTORUS_THE_BURNING_THRONE_H
 #define ANTORUS_THE_BURNING_THRONE_H
 
+#include "CreatureAIImpl.h"
+#include "ScriptedGossip.h"
+#include "Define.h"
+#include "ScriptMgr.h"
+#include "ScriptedCreature.h"
+#include "InstanceScript.h"
+#include "Map.h"
+#include "Player.h"
+#include "MotionMaster.h"
+#include "TemporarySummon.h"
+#include "GameObject.h"
+
 #define DataHeader "ATBT"
 #define ABTScriptName "instance_antorus_the_burning_throne"
 

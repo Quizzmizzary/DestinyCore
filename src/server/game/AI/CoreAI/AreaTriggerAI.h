@@ -18,6 +18,7 @@
 #ifndef TRINITY_AREATRIGGERAI_H
 #define TRINITY_AREATRIGGERAI_H
 
+#include "ObjectGuid.h"
 #include "Define.h"
 
 class AreaTrigger;

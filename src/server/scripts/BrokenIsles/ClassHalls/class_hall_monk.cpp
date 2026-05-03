@@ -16,6 +16,12 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ScriptedCreature.h"
+#include "CreatureAIImpl.h"
+#include "Player.h"
+#include "Unit.h"
+#include "QuestDef.h"
+#include "PetDefines.h"
 #include "ScriptMgr.h"
 enum
 {

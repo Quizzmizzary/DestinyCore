@@ -15,6 +15,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "InstanceScript.h"
 #include "cathedral_of_eternal_night.h"
 #include "GameObject.h"
 #include "SpellAuras.h"

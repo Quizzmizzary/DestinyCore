@@ -1,51 +1,58 @@
-/*
- * Copyright (C) 2008-2018 TrinityCore <https://www.trinitycore.org/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
- *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
 #include "ARC4.h"
 
-ARC4::ARC4(uint32 len) : m_ctx(EVP_CIPHER_CTX_new())
+#include <algorithm>
+#include <cstring>
+
+ARC4::ARC4(uint32 len) : _x(0), _y(0), _keyLen(len)
 {
-    EVP_CIPHER_CTX_init(m_ctx);
-    EVP_EncryptInit_ex(m_ctx, EVP_rc4(), nullptr, nullptr, nullptr);
-    EVP_CIPHER_CTX_set_key_length(m_ctx, len);
+    std::memset(_state, 0, sizeof(_state));
 }
 
-ARC4::ARC4(uint8* seed, uint32 len) : m_ctx(EVP_CIPHER_CTX_new())
+ARC4::ARC4(uint8* seed, uint32 len) : _x(0), _y(0), _keyLen(len)
 {
-    EVP_CIPHER_CTX_init(m_ctx);
-    EVP_EncryptInit_ex(m_ctx, EVP_rc4(), nullptr, nullptr, nullptr);
-    EVP_CIPHER_CTX_set_key_length(m_ctx, len);
-    EVP_EncryptInit_ex(m_ctx, nullptr, nullptr, seed, nullptr);
+    std::memset(_state, 0, sizeof(_state));
+    Setup(seed);
 }
 
 ARC4::~ARC4()
 {
-    EVP_CIPHER_CTX_free(m_ctx);
 }
 
 void ARC4::Init(uint8* seed)
 {
-    EVP_EncryptInit_ex(m_ctx, nullptr, nullptr, seed, nullptr);
+    Setup(seed);
+}
+
+void ARC4::Setup(uint8* seed)
+{
+    _x = 0;
+    _y = 0;
+
+    for (uint32 i = 0; i < 256; ++i)
+        _state[i] = static_cast<uint8>(i);
+
+    uint8 j = 0;
+
+    for (uint32 i = 0; i < 256; ++i)
+    {
+        j = static_cast<uint8>(j + _state[i] + seed[i % _keyLen]);
+        std::swap(_state[i], _state[j]);
+    }
 }
 
 void ARC4::UpdateData(int len, uint8* data)
 {
-    int outlen = 0;
-    EVP_EncryptUpdate(m_ctx, data, &outlen, data, len);
-    EVP_EncryptFinal_ex(m_ctx, data, &outlen);
+    if (!data || len <= 0)
+        return;
+
+    for (int i = 0; i < len; ++i)
+    {
+        _x = static_cast<uint8>(_x + 1);
+        _y = static_cast<uint8>(_y + _state[_x]);
+
+        std::swap(_state[_x], _state[_y]);
+
+        uint8 xorIndex = static_cast<uint8>(_state[_x] + _state[_y]);
+        data[i] ^= _state[xorIndex];
+    }
 }

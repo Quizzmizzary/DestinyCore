@@ -17,6 +17,10 @@
 
 #pragma once
 
+#include "ObjectGuid.h"
+#include "Player.h"
+
+#include <map>
 #include "Common.h"
 #include "DB2Structure.h"
 #include "LFGListMgr.h"

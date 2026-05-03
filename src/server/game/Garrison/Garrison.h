@@ -18,6 +18,8 @@
 #ifndef GARRISON_H
 #define GARRISON_H
 
+#include "Timer.h"
+#include <array>
 #include "Define.h"
 #include "DatabaseEnvFwd.h"
 #include "GarrisonAI.h"

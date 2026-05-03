@@ -18,6 +18,22 @@
 #ifndef DEF_BLACK_ROOK_HOLD_H
 #define DEF_BLACK_ROOK_HOLD_H
 
+#include "Define.h"
+#include "Position.h"
+#include "ScriptMgr.h"
+#include "ScriptedCreature.h"
+#include "CreatureAIImpl.h"
+#include "InstanceScript.h"
+#include "Map.h"
+#include "Creature.h"
+#include "Unit.h"
+#include "Player.h"
+#include "ObjectAccessor.h"
+#include "TemporarySummon.h"
+#include "SpellScript.h"
+#include "SpellAuraEffects.h"
+#include "SpellInfo.h"
+
 enum DataTypes
 {
     DATA_AMALGAM_OF_SOULS           = 0,

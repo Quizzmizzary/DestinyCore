@@ -15,6 +15,9 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "MotionMaster.h"
+#include "TemporarySummon.h"
+#include "Creature.h"
 #include "Common.h"
 #include "ObjectAccessor.h"
 #include "Player.h"
@@ -212,20 +215,22 @@ void BrawlersGuild::UpdateBrawl(uint32 diff)
         case BRAWL_STATE_PREPARE_COMBAT:
             if (_prepareCombatTimer.Passed())
             {
-                if (auto player = ObjectAccessor::FindPlayer(_current))
+                if (Player* player = ObjectAccessor::FindPlayer(_current))
                 {
                     if (SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(SPELL_ARENA_FORCE_REACTION))
-                     //   if (Aura* aura = Aura::TryRefreshStackOrCreate(spellInfo, MAX_EFFECT_MASK, player, player))
-                         //   aura->ApplyForTargets();
+                    {
+                        // if (Aura* aura = Aura::TryRefreshStackOrCreate(spellInfo, MAX_EFFECT_MASK, player, player))
+                        //     aura->ApplyForTargets();
+                    }
 
                     if (auto entry = GetBossForPlayer(player))
                     {
                         uint8 select_points = (player->GetTeamId() == TEAM_ALLIANCE ? 4 : 5);
-                        
+
                         if (entry == NPC_NIBBLEH) // hack
                             select_points += 2;
-                        
-                        if (auto summon = static_cast<Creature*>(player->SummonCreature(entry, BrawlersTeleportLocations[select_points], TEMPSUMMON_TIMED_DESPAWN, 120000)))
+
+                        if (TempSummon* summon = player->SummonCreature(entry, BrawlersTeleportLocations[select_points], TEMPSUMMON_TIMED_DESPAWN, 120000))
                         {
                             _boss = summon->GetGUID();
                             _combatTimer.SetCurrent(0);
@@ -235,11 +240,11 @@ void BrawlersGuild::UpdateBrawl(uint32 diff)
                             summon->CastSpell(summon, 132633);
                             return;
                         }
-                    }   
-                }
-                _prepareCombatTimer.SetCurrent(0);
+                    }
 
-                EndCombat(false);
+                    _prepareCombatTimer.SetCurrent(0);
+                    EndCombat(false);
+                }
             }
             break;
         case BRAWL_STATE_COMBAT:
